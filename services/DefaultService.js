@@ -69,11 +69,23 @@ const findAlbumById = ({ id }) => new Promise(
 * returns List
 * */
 const listAlbums = ({ limit, offset }) => new Promise(
+  
   async (resolve, reject) => {
     try {
+      const albums = [
+        {"userId":4,"id":32,"title":"reiciendis dolores a ut qui debitis non quo labore","_id":"0zU8clZ4WTLcNEv1"},
+        {"userId":6,"id":54,"title":"aut non illo amet perferendis","_id":"1EFDgTOQeRqx80if"},
+        {"userId":9,"id":85,"title":"qui voluptatem consequatur aut ab quis temporibus praesentium","_id":"1fgKN0a9Gjr8N5Mi"},
+        {"userId":3,"id":29,"title":"inventore ut quasi magnam itaque est fugit","_id":"1hKksYPH1A6FG4QY"},
+        {"userId":1,"id":10,"title":"distinctio laborum qui","_id":"2PoOyVA0Dqxx25ja"},
+        {"userId":5,"id":44,"title":"sapiente cum numquam officia consequatur vel natus quos suscipit","_id":"2WdA3wZwBzogiwcE"},
+        {"userId":10,"id":91,"title":"repellendus praesentium debitis officiis","_id":"3465EUTHf4pEUfFZ"},
+        {"userId":5,"id":42,"title":"tenetur explicabo ea","_id":"3rlCNbUyS7uiOvTU"},
+      ];
       resolve(Service.successResponse({
         limit,
         offset,
+        albums
       }));
     } catch (e) {
       reject(Service.rejectResponse(
