@@ -362,8 +362,7 @@ components:
     Album_allOf:
       properties:
         _id:
-          format: string
-          type: integer
+          type: string
         favorite:
           $ref: '#/components/schemas/Favorite'
       required:

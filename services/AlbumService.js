@@ -138,7 +138,7 @@ const updateAlbum = ({ id, album }) => new Promise(
       const newAlbum = await db.albums.update({_id: id}, album)
       resolve(Service.successResponse({
         id,
-        album: newAlbum
+        newAlbum
       }));
     } catch (e) {
       reject(Service.rejectResponse(
