@@ -1,8 +1,6 @@
 /* eslint-disable no-unused-vars */
 const Service = require('./Service');
-const db = require('../db')
-const util = require('util')
-
+const db = require('../db');
 /**
 * Create album
 * Creates a new Album in the store

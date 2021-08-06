@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 const Service = require('./Service');
+const db = require('../db');
 
 /**
 * Creates a new Album in the store
@@ -9,9 +10,11 @@ const Service = require('./Service');
 * */
 const addFavorite = ({ newFavorite }) => new Promise(
   async (resolve, reject) => {
+    const favorite = await db.favorites.insert(newFavorite);
+    favorite.id = favorite._id
     try {
       resolve(Service.successResponse({
-        newFavorite,
+        favorite,
       }));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -30,6 +33,7 @@ const addFavorite = ({ newFavorite }) => new Promise(
 const deleteFavorite = ({ id }) => new Promise(
   async (resolve, reject) => {
     try {
+      const numRemoved = await db.favorites.remove({_id:id})
       resolve(Service.successResponse({
         id,
       }));
