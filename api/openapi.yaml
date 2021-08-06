@@ -45,7 +45,7 @@ paths:
                 items:
                   $ref: '#/components/schemas/Album'
                 type: array
-          description: A paged array of pets
+          description: A paged array of albums
           headers:
             x-next:
               description: A link to the next page of responses
@@ -61,6 +61,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: unexpected error
+      summary: List albums
       x-eov-operation-handler: controllers/DefaultController
     post:
       description: Creates a new Album in the store
@@ -84,6 +85,7 @@ paths:
           description: Successful operation
         "405":
           description: Invalid input
+      summary: Create album
       x-eov-operation-handler: controllers/DefaultController
   /album/{id}:
     delete:
@@ -108,6 +110,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: unexpected error
+      summary: Delete an album
       x-eov-operation-handler: controllers/DefaultController
     get:
       description: Returns an album based on a single ID,
@@ -142,8 +145,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: unexpected error
+      summary: Get album by ID
       x-eov-operation-handler: controllers/DefaultController
     put:
+      description: 'Updates album by ID '
       operationId: updatePetWithForm
       parameters:
       - description: ID of album that needs to be updated
@@ -167,7 +172,76 @@ paths:
           description: No Content
         "405":
           description: Invalid input
-      summary: Updates a album in the store with form data
+      summary: Update album
+      x-eov-operation-handler: controllers/DefaultController
+  /favorite:
+    get:
+      description: List all favorites relations
+      operationId: listFavorites
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Favorite'
+                type: array
+          description: An array of favorites relations
+        "204":
+          description: No Content
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      x-eov-operation-handler: controllers/DefaultController
+    post:
+      description: Creates a new Album in the store
+      operationId: addFavorite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewFavorite'
+        description: Add Favorite album
+        required: true
+      responses:
+        "200":
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Favorite'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Favorite'
+          description: Successful operation
+        "405":
+          description: Invalid input
+      x-eov-operation-handler: controllers/DefaultController
+  /favorite/{id}:
+    delete:
+      description: deletes a favorite based on the ID supplied
+      operationId: deleteFavorite
+      parameters:
+      - description: ID of pet to delete
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          format: int64
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: pet deleted
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
       x-eov-operation-handler: controllers/DefaultController
 components:
   schemas:
@@ -191,6 +265,24 @@ components:
       required:
       - _id
       - title
+      - userId
+      type: object
+    Favorite:
+      allOf:
+      - $ref: '#/components/schemas/NewFavorite'
+      - $ref: '#/components/schemas/Album_allOf'
+    NewFavorite:
+      example:
+        albumId: albumId
+        userId: 0
+      properties:
+        userId:
+          format: int64
+          type: integer
+        albumId:
+          type: string
+      required:
+      - albumId
       - userId
       type: object
     Error:

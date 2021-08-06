@@ -12,8 +12,16 @@ const addAlbum = async (request, response) => {
   await Controller.handleRequest(request, response, service.addAlbum);
 };
 
+const addFavorite = async (request, response) => {
+  await Controller.handleRequest(request, response, service.addFavorite);
+};
+
 const deleteAlbum = async (request, response) => {
   await Controller.handleRequest(request, response, service.deleteAlbum);
+};
+
+const deleteFavorite = async (request, response) => {
+  await Controller.handleRequest(request, response, service.deleteFavorite);
 };
 
 const findAlbumById = async (request, response) => {
@@ -24,6 +32,10 @@ const listAlbums = async (request, response) => {
   await Controller.handleRequest(request, response, service.listAlbums);
 };
 
+const listFavorites = async (request, response) => {
+  await Controller.handleRequest(request, response, service.listFavorites);
+};
+
 const updatePetWithForm = async (request, response) => {
   await Controller.handleRequest(request, response, service.updatePetWithForm);
 };
@@ -31,8 +43,11 @@ const updatePetWithForm = async (request, response) => {
 
 module.exports = {
   addAlbum,
+  addFavorite,
   deleteAlbum,
+  deleteFavorite,
   findAlbumById,
   listAlbums,
+  listFavorites,
   updatePetWithForm,
 };
