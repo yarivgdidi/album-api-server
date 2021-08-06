@@ -372,8 +372,7 @@ components:
     Favorite_allOf:
       properties:
         _id:
-          format: int64
-          type: integer
+          type: string
       required:
       - _id
       type: object
