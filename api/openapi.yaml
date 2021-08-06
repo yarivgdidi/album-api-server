@@ -291,7 +291,7 @@ components:
     Favorite:
       allOf:
       - $ref: '#/components/schemas/NewFavorite'
-      - $ref: '#/components/schemas/Album_allOf'
+      - $ref: '#/components/schemas/Favorite_allOf'
     NewFavorite:
       example:
         albumId: albumId
@@ -318,6 +318,16 @@ components:
       - message
       type: object
     Album_allOf:
+      properties:
+        id:
+          format: int64
+          type: integer
+        favorite:
+          $ref: '#/components/schemas/Favorite'
+      required:
+      - id
+      type: object
+    Favorite_allOf:
       properties:
         id:
           format: int64
