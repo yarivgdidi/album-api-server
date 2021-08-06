@@ -135,9 +135,10 @@ const listFavoritesAlbums = ({ limit, offset }) => new Promise(
 const updateAlbum = ({ id, album }) => new Promise(
   async (resolve, reject) => {
     try {
+      const newAlbum = await db.albums.update({_id: id}, album)
       resolve(Service.successResponse({
         id,
-        album,
+        album: newAlbum
       }));
     } catch (e) {
       reject(Service.rejectResponse(
