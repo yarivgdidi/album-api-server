@@ -83,7 +83,7 @@ const listAlbums = ({ limit, offset }) => new Promise(
       const albums = await db.albums.find({}).skip(offset).limit(limit);
       const favorites = await db.favorites.find({});
       const albumsWithFavorites = albums
-        .map(album => ({ ...album, favorites: favorites.find(favorite => album.userId === favorite.userId && album.id === favorite.albumId ) }))
+        .map(album => ({ ...album, favorites: favorites.find(favorite => _ album.id === favorite.albumId ) }))
         
       resolve(Service.successResponse({
         limit,
@@ -108,13 +108,10 @@ const listAlbums = ({ limit, offset }) => new Promise(
 * */
 const listFavoritesAlbums = ({ limit, offset }) => new Promise( 
   async (resolve, reject) => {
-    const albums = await db.albums.find({})
-    const favorites = await db.favorites.find({});
-    const albumsWithFavorites = albums.map(album => ({ ...album, favorites: favorites.
-      find(favorite => album.userId === favorite.userId && album.id === favorite.albumId ) }))
-      .filter(album => album.favorite)
-   
     try {
+      const albums = await db.albums.find({})
+      const favorites = await db.favorites.find({});
+      const albumsWithFavorites = favorites.map(favorite => ({ favorite: favorite._id, ...albums.find(album => album._id === favorite.albumId ) }))
       resolve(Service.successResponse({
         limit,
         offset,
