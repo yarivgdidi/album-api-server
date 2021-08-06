@@ -52,8 +52,10 @@ const deleteFavorite = ({ id }) => new Promise(
 * */
 const listFavorites = () => new Promise(
   async (resolve, reject) => {
+    const favorites = await db.favorites.find({});
     try {
       resolve(Service.successResponse({
+        favorites
       }));
     } catch (e) {
       reject(Service.rejectResponse(

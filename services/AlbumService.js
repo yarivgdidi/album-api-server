@@ -9,11 +9,12 @@ const db = require('../db');
 * newAlbum NewAlbum Albums to add to the store
 * returns Album
 * */
-const addAlbum = ({ newAlbum }) => new Promise(
+const addAlbum = ({ newAlbum }) => new Promise( 
   async (resolve, reject) => {
+    const album = await db.albums.insert(newAlbum)
     try {
       resolve(Service.successResponse({
-        newAlbum,
+        album,
       }));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -33,8 +34,9 @@ const addAlbum = ({ newAlbum }) => new Promise(
 const deleteAlbum = ({ id }) => new Promise(
   async (resolve, reject) => {
     try {
+      const numRemoved = await db.albums.remove({_id:id})
       resolve(Service.successResponse({
-        id,
+        _id,
       }));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -53,9 +55,11 @@ const deleteAlbum = ({ id }) => new Promise(
 * */
 const findAlbumById = ({ id }) => new Promise(
   async (resolve, reject) => {
+    const album = await db.albums.findOne({_id:id})
     try {
       resolve(Service.successResponse({
         id,
+        album
       }));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -78,7 +82,9 @@ const listAlbums = ({ limit, offset }) => new Promise(
     try {
       const albums = await db.albums.find({}).skip(offset).limit(limit);
       const favorites = await db.favorites.find({});
-      const albumsWithFavorites = albums.map(album => ({ ...album, favorites: favorites.find(favorite => album.userId === favorite.userId && album.id === favorite.albumId ) }))
+      const albumsWithFavorites = albums
+        .map(album => ({ ...album, favorites: favorites.find(favorite => album.userId === favorite.userId && album.id === favorite.albumId ) }))
+        
       resolve(Service.successResponse({
         limit,
         offset,
@@ -90,7 +96,7 @@ const listAlbums = ({ limit, offset }) => new Promise(
         e.status || 405,
       ));
     }
-  },
+  }, 
 );
 /**
 * List favorites albums
@@ -100,12 +106,19 @@ const listAlbums = ({ limit, offset }) => new Promise(
 * offset Integer offset from beginning of list (for pagination) (optional)
 * returns List
 * */
-const listFavoritesAlbums = ({ limit, offset }) => new Promise(
+const listFavoritesAlbums = ({ limit, offset }) => new Promise( 
   async (resolve, reject) => {
+    const albums = await db.albums.find({})
+    const favorites = await db.favorites.find({});
+    const albumsWithFavorites = albums.map(album => ({ ...album, favorites: favorites.
+      find(favorite => album.userId === favorite.userId && album.id === favorite.albumId ) }))
+      .filter(album => album.favorite)
+   
     try {
       resolve(Service.successResponse({
         limit,
         offset,
+        albums: limit && offset ? albumsWithFavorites.slice(offset, offset + limit) : albumsWithFavorites
       }));
     } catch (e) {
       reject(Service.rejectResponse(
