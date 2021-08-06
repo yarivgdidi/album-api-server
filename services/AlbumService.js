@@ -82,8 +82,7 @@ const listAlbums = ({ limit, offset }) => new Promise(
     try {
       const albums = await db.albums.find({}).skip(offset).limit(limit);
       const favorites = await db.favorites.find({});
-      const albumsWithFavorites = albums
-        .map(album => ({ ...album, favorites: favorites.find(favorite => _ album.id === favorite.albumId ) }))
+      const albumsWithFavorites = albums.map(album => ({ ...album, favorites: favorites.find(favorite => album._id === favorite.albumId ) }))
         
       resolve(Service.successResponse({
         limit,
