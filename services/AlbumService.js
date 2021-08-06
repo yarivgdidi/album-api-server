@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 const Service = require('./Service');
+const db = require('../db')
+const util = require('util')
 
 /**
 * Create album
@@ -75,17 +77,24 @@ const findAlbumById = ({ id }) => new Promise(
 const listAlbums = ({ limit, offset }) => new Promise(
   async (resolve, reject) => {
     try {
+      const albums = await db.albums.find({}).skip(offset).limit(limit);
+      const favorites = await db.favorites.find({});
+      const albumsWithFavorites = albums.map(album => ({ ...album, favorites: favorites.find(favorite => album.userId === favorite.userId && album.id === favorite.albumId ) }))
+
+    
       resolve(Service.successResponse({
         limit,
         offset,
+        albums:albumsWithFavorites,
       }));
     } catch (e) {
       reject(Service.rejectResponse(
         e.message || 'Invalid input',
         e.status || 405,
       ));
+ 
     }
-  },
+  }
 );
 /**
 * Update album
