@@ -24,8 +24,12 @@ const listAlbums = async (request, response) => {
   await Controller.handleRequest(request, response, service.listAlbums);
 };
 
-const updatePetWithForm = async (request, response) => {
-  await Controller.handleRequest(request, response, service.updatePetWithForm);
+const listFavoritesAlbums = async (request, response) => {
+  await Controller.handleRequest(request, response, service.listFavoritesAlbums);
+};
+
+const updateAlbum = async (request, response) => {
+  await Controller.handleRequest(request, response, service.updateAlbum);
 };
 
 
@@ -34,5 +38,6 @@ module.exports = {
   deleteAlbum,
   findAlbumById,
   listAlbums,
-  updatePetWithForm,
+  listFavoritesAlbums,
+  updateAlbum,
 };

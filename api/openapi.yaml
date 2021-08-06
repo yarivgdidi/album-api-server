@@ -162,7 +162,7 @@ paths:
       x-eov-operation-handler: controllers/AlbumController
     put:
       description: 'Updates album by ID '
-      operationId: updatePetWithForm
+      operationId: updateAlbum
       parameters:
       - description: ID of album that needs to be updated
         explode: false
@@ -186,6 +186,57 @@ paths:
         "405":
           description: Invalid input
       summary: Update album
+      tags:
+      - album
+      x-eov-operation-handler: controllers/AlbumController
+  /album/favorites:
+    get:
+      description: List all albums with user access
+      operationId: listFavoritesAlbums
+      parameters:
+      - description: maximum number of results to return
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      - description: offset from beginning of list (for pagination)
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Album'
+                type: array
+          description: A paged array of albums
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              explode: false
+              schema:
+                type: string
+              style: simple
+        "204":
+          description: No Content
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      summary: List favorites albums
       tags:
       - album
       x-eov-operation-handler: controllers/AlbumController
