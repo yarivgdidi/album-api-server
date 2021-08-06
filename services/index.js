@@ -1,5 +1,7 @@
-const DefaultService = require('./DefaultService');
+const AlbumService = require('./AlbumService');
+const FavoriteService = require('./FavoriteService');
 
 module.exports = {
-  DefaultService,
+  AlbumService,
+  FavoriteService,
 };

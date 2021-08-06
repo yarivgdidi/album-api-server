@@ -13,6 +13,11 @@ info:
   version: 1.0.0
 servers:
 - url: http://localhost:3000/api
+tags:
+- description: Album
+  name: album
+- description: Operations about favorite album
+  name: favorite
 paths:
   /album:
     get:
@@ -62,7 +67,9 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: unexpected error
       summary: List albums
-      x-eov-operation-handler: controllers/DefaultController
+      tags:
+      - album
+      x-eov-operation-handler: controllers/AlbumController
     post:
       description: Creates a new Album in the store
       operationId: addAlbum
@@ -86,7 +93,9 @@ paths:
         "405":
           description: Invalid input
       summary: Create album
-      x-eov-operation-handler: controllers/DefaultController
+      tags:
+      - album
+      x-eov-operation-handler: controllers/AlbumController
   /album/{id}:
     delete:
       description: deletes a single album based on the ID supplied
@@ -111,7 +120,9 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: unexpected error
       summary: Delete an album
-      x-eov-operation-handler: controllers/DefaultController
+      tags:
+      - album
+      x-eov-operation-handler: controllers/AlbumController
     get:
       description: Returns an album based on a single ID,
       operationId: findAlbumById
@@ -146,7 +157,9 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: unexpected error
       summary: Get album by ID
-      x-eov-operation-handler: controllers/DefaultController
+      tags:
+      - album
+      x-eov-operation-handler: controllers/AlbumController
     put:
       description: 'Updates album by ID '
       operationId: updatePetWithForm
@@ -173,7 +186,9 @@ paths:
         "405":
           description: Invalid input
       summary: Update album
-      x-eov-operation-handler: controllers/DefaultController
+      tags:
+      - album
+      x-eov-operation-handler: controllers/AlbumController
   /favorite:
     get:
       description: List all favorites relations
@@ -195,7 +210,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: unexpected error
-      x-eov-operation-handler: controllers/DefaultController
+      tags:
+      - favorite
+      x-eov-operation-handler: controllers/FavoriteController
     post:
       description: Creates a new Album in the store
       operationId: addFavorite
@@ -218,7 +235,9 @@ paths:
           description: Successful operation
         "405":
           description: Invalid input
-      x-eov-operation-handler: controllers/DefaultController
+      tags:
+      - favorite
+      x-eov-operation-handler: controllers/FavoriteController
   /favorite/{id}:
     delete:
       description: deletes a favorite based on the ID supplied
@@ -242,7 +261,9 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: unexpected error
-      x-eov-operation-handler: controllers/DefaultController
+      tags:
+      - favorite
+      x-eov-operation-handler: controllers/FavoriteController
 components:
   schemas:
     Album:

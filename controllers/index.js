@@ -1,5 +1,7 @@
-const DefaultController = require('./DefaultController');
+const AlbumController = require('./AlbumController');
+const FavoriteController = require('./FavoriteController');
 
 module.exports = {
-  DefaultController,
+  AlbumController,
+  FavoriteController,
 };
