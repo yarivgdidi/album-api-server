@@ -77,13 +77,15 @@ const findAlbumById = ({ id }) => new Promise(
 * offset Integer offset from beginning of list (for pagination) (optional)
 * returns List
 * */
-const listAlbums = ({ limit, offset }) => new Promise(
+const listAlbums = ({ limit, offset, filter }) => new Promise(
   async (resolve, reject) => {
     try {
-      const albums = await db.albums.find({}).skip(offset).limit(limit);
+      const albums = filter?  await db.albums.find({title: new RegExp(filter)} ).skip(offset).limit(limit) : await db.albums.find({}).skip(offset).limit(limit);
+      const total = filter? await db.albums.count({title: new RegExp(filter)}) : await db.albums.count();
+{}
       const favorites = await db.favorites.find({});
       const albumsWithFavorites = albums.map(album => ({ ...album, favorites: favorites.find(favorite => album._id === favorite.albumId ) }))
-      const total = await db.albums.count();
+     
         
       resolve(Service.successResponse({
         limit,
