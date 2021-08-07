@@ -83,10 +83,12 @@ const listAlbums = ({ limit, offset }) => new Promise(
       const albums = await db.albums.find({}).skip(offset).limit(limit);
       const favorites = await db.favorites.find({});
       const albumsWithFavorites = albums.map(album => ({ ...album, favorites: favorites.find(favorite => album._id === favorite.albumId ) }))
+      const total = await db.albums.count();
         
       resolve(Service.successResponse({
         limit,
         offset,
+        total,
         albums:albumsWithFavorites,
       }));
     } catch (e) {
