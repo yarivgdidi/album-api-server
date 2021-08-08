@@ -121,7 +121,7 @@ const listFavoritesAlbums = ({ limit, offset }) => new Promise(
       resolve(Service.successResponse({
         limit,
         offset,
-        albums: limit && offset ? albumsWithFavorites.slice(offset, offset + limit) : albumsWithFavorites
+        favoritesAlbums: limit && offset ? albumsWithFavorites.slice(offset, offset + limit) : albumsWithFavorites
       }));
     } catch (e) {
       reject(Service.rejectResponse(

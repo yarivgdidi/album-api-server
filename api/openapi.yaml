@@ -217,6 +217,14 @@ paths:
           format: int32
           type: integer
         style: form
+      - description: search filter
+        explode: true
+        in: query
+        name: filter
+        required: false
+        schema:
+          type: string
+        style: form
       responses:
         "200":
           content:
