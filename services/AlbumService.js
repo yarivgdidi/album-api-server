@@ -112,15 +112,20 @@ const listAlbums = ({ limit, offset, filter }) => new Promise(
 * offset Integer offset from beginning of list (for pagination) (optional)
 * returns List
 * */
-const listFavoritesAlbums = ({ limit, offset }) => new Promise( 
+const listFavoritesAlbums = ({ limit, offset, filter }) => new Promise( 
   async (resolve, reject) => {
     try {
       const albums = await db.albums.find({})
       const favorites = await db.favorites.find({});
-      const albumsWithFavorites = favorites.map(favorite => ({ favorite: favorite._id, ...albums.find(album => album._id === favorite.albumId ) }))
+      let albumsWithFavorites = favorites.map(favorite => ({ favorite: favorite._id, ...albums.find(album => album._id === favorite.albumId ) }))
+      if (filter && filter != ''){
+        albumsWithFavorites = albumsWithFavorites.filter(album => album.title.indexOf(filter)>= 0)
+      }
+
       resolve(Service.successResponse({
         limit,
         offset,
+        total:albumsWithFavorites.length,
         favoritesAlbums: limit && offset ? albumsWithFavorites.slice(offset, offset + limit) : albumsWithFavorites
       }));
     } catch (e) {
