@@ -2,8 +2,8 @@ const path = require('path');
 
 const config = {
   ROOT_DIR: __dirname,
-  URL_PORT: 443,
-  URL_PATH: 'https://album-api-server.herokuapp.com',
+  URL_PORT: 8080,
+  URL_PATH: 'http://album-api-server.herokuapp.com',
   BASE_VERSION: '/api',
   CONTROLLER_DIRECTORY: path.join(__dirname, 'controllers'),
   PROJECT_DIR: __dirname,

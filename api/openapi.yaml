@@ -12,7 +12,7 @@ info:
   title: Open Api album example
   version: 1.0.0
 servers:
-- url: https://album-api-server.herokuapp.com/api
+- url: http://album-api-server.herokuapp.com/api
 - url: http://localhost:3000/api
 tags:
 - description: Album
