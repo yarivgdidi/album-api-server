@@ -82,9 +82,12 @@ const listAlbums = ({ limit, offset, filter }) => new Promise(
     try {
       const albums = filter?  await db.albums.find({title: new RegExp(filter)} ).skip(offset).limit(limit) : await db.albums.find({}).skip(offset).limit(limit);
       const total = filter? await db.albums.count({title: new RegExp(filter)}) : await db.albums.count();
-{}
       const favorites = await db.favorites.find({});
-      const albumsWithFavorites = albums.map(album => ({ ...album, favorites: favorites.find(favorite => album._id === favorite.albumId ) }))
+      const albumsWithFavorites = albums.map(album => {
+          const favorite = favorites.find(favorite => album._id === favorite.albumId ) 
+          return favorite ?  { ...album, favorite: favorite._id } : album
+        
+        })
      
         
       resolve(Service.successResponse({
