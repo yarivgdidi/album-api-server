@@ -6,7 +6,7 @@
   "scripts": {
     "prestart": "npm install",
     "start": "node index.js",
-    "local": "nodemon index.js"
+    "local": "PORT=3000 nodemon index.js"
   },
   "keywords": [
     "openapi-generator",
